@@ -1,20 +1,43 @@
-﻿using CodeFirstEntity.Interfaces;
+﻿using CodeFirstEntity.Entities;
+using CodeFirstEntity.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data;
+using System.Data.SqlClient;
 
-namespace CodeFirstEntity
+namespace CodeFirstEntity.Classes
 {
     public class EmployeeDL : IEmployeeDL
     {
+        public SqlConnection con;
+        public EmployeeDL(SqlConnection _con)
+        {
+            con = _con;
+        }
+
+        public virtual void SaveEmployeeTest(EmployeeDetails empDet)
+        {
+            // SqlConnection con = new SqlConnection(@"Data Source=B283LCOK\SQLEXPRESS;Initial Catalog=EmployeeDB;Integrated Security=True");
+            SqlCommand cmd = new SqlCommand("SaveEmployee", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@EmpName", empDet.Name);
+            cmd.Parameters.AddWithValue("@EmpAddress", empDet.Address);
+            cmd.Parameters.AddWithValue("@EmpAge", empDet.Age);
+            cmd.Parameters.AddWithValue("@EmpJobID", empDet.EmployeeJobID);
+            con.Open();
+            cmd.ExecuteNonQuery();
+            con.Close();
+
+        }
+
         public void SaveEmployee(EmployeeDetails empDet)
         {
-            EmployeeEntity empContext = new EmployeeEntity();
-
+            var empContext = new EmployeeEntity();
             var jobObj = empContext.JobDetails.FirstOrDefault(x => x.JobID == empDet.EmployeeJobID);
-            if (jobObj !=null)
+            if (jobObj != null)
             {
                 //jobObj.Name = empDet.JobDetails.Name;
 
@@ -25,13 +48,13 @@ namespace CodeFirstEntity
                     empObj.Address = empDet.Address;
                     empObj.Age = empDet.Age;
                     empObj.EmployeeJobID = jobObj.JobID;
-                   // jobObj.Name = empDet.JobDetails.Name;
+                    // jobObj.Name = empDet.JobDetails.Name;
 
                 }
                 else
                 {
-                    empDet.EmployeeJobID= jobObj.JobID;                   
-                  //  jobObj.Name = empDet.JobDetails.Name;
+                    empDet.EmployeeJobID = jobObj.JobID;
+                    //  jobObj.Name = empDet.JobDetails.Name;
                     empDet.JobDetails = null;
                     empContext.EmployeeDetails.Add(empDet);
                 }
@@ -47,11 +70,11 @@ namespace CodeFirstEntity
                     empObj.JobDetails = empDet.JobDetails;
                 }
                 else
-                {                   
+                {
                     empContext.EmployeeDetails.Add(empDet);
                 }
             }
-           
+
             empContext.SaveChanges();
         }
 
@@ -104,7 +127,7 @@ namespace CodeFirstEntity
 
         public void DeleteEmployee(int empId)
         {
-            EmployeeEntity empContext = new EmployeeEntity();
+           EmployeeEntity empContext = new EmployeeEntity();
            var emp= empContext.EmployeeDetails.Where(x => x.EmpID == empId).FirstOrDefault();
             empContext.Entry(emp).State = System.Data.Entity.EntityState.Deleted;
             empContext.SaveChanges();

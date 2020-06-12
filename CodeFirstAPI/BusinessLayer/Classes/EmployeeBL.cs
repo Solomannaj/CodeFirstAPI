@@ -1,4 +1,6 @@
-﻿using CodeFirstAPI.Models;
+﻿using CodeFirstAPI.Interfaces;
+using CodeFirstAPI.Models;
+using CodeFirstEntity.Entities;
 using CodeFirstEntity.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -6,10 +8,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CodeFirstEntity
+namespace CodeFirstAPI.Classes
 {
     public class EmployeeBL : IEmployeeBL
     {
+        private IEmployeeDL _IEmployeeDL;
+
+        public EmployeeBL(IEmployeeDL iEmployeeDL)
+        {
+            _IEmployeeDL= iEmployeeDL;
+        }
         public void SaveEmployee(Employee emp)
         {
             JobDetails jb = null;
@@ -34,9 +42,7 @@ namespace CodeFirstEntity
             empDet.JobDetails = jb;
             empDet.EmployeeJobID = emp.JobID;
 
-            IEmployeeDL cls = new EmployeeDL();
-
-            cls.SaveEmployee(empDet);
+            _IEmployeeDL.SaveEmployee(empDet);
 
         }
 
@@ -64,18 +70,14 @@ namespace CodeFirstEntity
             empDet.JobDetails = jb;
             empDet.EmployeeJobID = emp.JobID;
 
-            IEmployeeDL cls = new EmployeeDL();
-
-            cls.EditEmployee(empDet);
+            _IEmployeeDL.EditEmployee(empDet);
 
         }
 
         public List<Employee> GetEmployees()
         {
 
-            IEmployeeDL cls = new EmployeeDL();
-
-            List<EmployeeDetails> lstEmployees = cls.GetEmployees();
+            List<EmployeeDetails> lstEmployees = _IEmployeeDL.GetEmployees();
 
             List<Employee> lstEmployeesObj = new List<Employee>();
 
@@ -113,9 +115,7 @@ namespace CodeFirstEntity
         public List<Job> GetJobs()
         {
 
-            IEmployeeDL cls = new EmployeeDL();
-
-            List<JobDetails> lstEmployees = cls.GetJobs();
+            List<JobDetails> lstEmployees = _IEmployeeDL.GetJobs();
 
             List<Job> lstEmployeesObj = new List<Job>();
 
@@ -136,47 +136,13 @@ namespace CodeFirstEntity
         }
 
         public void DeleteEmployee(int empId)
-        {
-            IEmployeeDL cls = new EmployeeDL();
-            cls.DeleteEmployee(empId);
+        {            
+            _IEmployeeDL.DeleteEmployee(empId);
         }
 
         public void SaveJob()
         {
-            EmployeeEntity empContext = new EmployeeEntity();
-
-         
-
-            EmployeeDetails ed1 = new EmployeeDetails()
-            {
-                Name = "Ardhra",
-                Address = "Bla bla",
-                Age = 29,
-                Salary = 20000
-                
-            };
-
-            EmployeeDetails ed2 = new EmployeeDetails()
-            {
-                Name = "Jwala",
-                Address = "Bla bla",
-                Age = 29,
-                Salary = 20000               
-            };
-
-            List<EmployeeDetails> lstempl = new List<EmployeeDetails>();
-            lstempl.Add(ed1); lstempl.Add(ed2);
-
-            JobDetails jb = new JobDetails()
-            {
-                Name = "Part-Time",
-                Employees= lstempl
-            };
-
-       
-
-            empContext.JobDetails.Add(jb);
-            empContext.SaveChanges();
+            _IEmployeeDL.SaveJob();
         }
 
         //JobDetails jb = new JobDetails()

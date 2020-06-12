@@ -76,6 +76,14 @@
     <Compile Include="Migrations\202005161133297_AddEmployeeDetailsEmployeeJobID.designer.cs">
       <DependentUpon>202005161133297_AddEmployeeDetailsEmployeeJobID.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202006031641293_AddJobDetails1.cs" />
+    <Compile Include="Migrations\202006031641293_AddJobDetails1.designer.cs">
+      <DependentUpon>202006031641293_AddJobDetails1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006070922409_ggg.cs" />
+    <Compile Include="Migrations\202006070922409_ggg.designer.cs">
+      <DependentUpon>202006070922409_ggg.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -97,6 +105,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005161133297_AddEmployeeDetailsEmployeeJobID.resx">
       <DependentUpon>202005161133297_AddEmployeeDetailsEmployeeJobID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006031641293_AddJobDetails1.resx">
+      <DependentUpon>202006031641293_AddJobDetails1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006070922409_ggg.resx">
+      <DependentUpon>202006070922409_ggg.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

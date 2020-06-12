@@ -1,4 +1,4 @@
-namespace CodeFirstEntity
+namespace CodeFirstEntity.Entities
 {
     using System;
     using System.Collections.Generic;
@@ -48,8 +48,24 @@ namespace CodeFirstEntity
         [StringLength(50)]
         public string Name { get; set; }
 
+        [ForeignKey("JobType")]
+        public int JobTypeRefID { get; set; }
+
+        public virtual JobType JobType { get; set; }
+
         public virtual ICollection<EmployeeDetails> Employees { get; set; }
 
     }
-  
+
+    public class JobType
+    {
+        [Key]
+        public int JobTypeID { get; set; }
+
+        [StringLength(50)]
+        public string Name { get; set; }
+
+        public virtual ICollection<JobDetails> Jobs { get; set; }
+    }
+
 }

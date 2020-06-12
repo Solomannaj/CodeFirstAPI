@@ -5,7 +5,7 @@
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<CodeFirstEntity.EmployeeEntity>
+    internal sealed class Configuration : DbMigrationsConfiguration<CodeFirstEntity.Entities.EmployeeEntity>
     {
         public Configuration()
         {
@@ -13,7 +13,7 @@
             ContextKey = "CodeFirstEntity.EmployeeEntity";
         }
 
-        protected override void Seed(CodeFirstEntity.EmployeeEntity context)
+        protected override void Seed(CodeFirstEntity.Entities.EmployeeEntity context)
         {
             //  This method will be called after migrating to the latest version.
 

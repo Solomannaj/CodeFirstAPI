@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CodeFirstEntity.Interfaces
+namespace CodeFirstAPI.Interfaces
 {
    public interface IEmployeeBL
     {
